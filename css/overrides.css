@@ -1,0 +1,43 @@
+
+#root > section:nth-of-type(2) {
+  background: hsl(40 30% 94%) !important;
+}
+
+#root > section:nth-of-type(8) {
+  background: hsl(40 30% 94%) !important;
+}
+
+/* Dark-mode adjustments */
+.dark #root > section:nth-of-type(2),
+.dark #root > section:nth-of-type(8) {
+  background: hsl(30 15% 8%) !important;
+}
+
+/* Scroll reveal: fade + slide up when sections enter viewport */
+/* Reveal items (transform-only, no opacity/blur) */
+.reveal-item{
+  transform: translateY(20px) scale(.98);
+  transition: transform .6s cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+}
+.reveal-item.is-visible{
+  transform: none;
+}
+
+/* Stagger helper for small child elements inside a component */
+.reveal-item[data-stagger-index] {
+  /* placeholder: JS sets `transition-delay` inline per item to create stagger */
+  transition-delay: 0s;
+}
+
+/* Backwards-compatible: if sections had reveal-on-scroll, keep harmless defaults */
+.reveal-on-scroll{transform: none}
+
+/* Accessibility: respect user's reduced motion preference by disabling AOS transitions */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos], [data-aos] * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

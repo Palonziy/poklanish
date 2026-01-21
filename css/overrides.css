@@ -102,3 +102,44 @@
   object-fit: cover !important;
   border-radius: inherit !important;
 }
+
+/* Footer YouTube link styles */
+.footer-youtube-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: #ff0000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+.footer-youtube-link .fy-icon svg { display: block; }
+.footer-youtube-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,0.14); }
+
+/* Ensure footer layout doesn't break when adding the link */
+footer .footer-youtube-link, .site-footer .footer-youtube-link, .footer .footer-youtube-link { margin-left: 0.5rem; }
+
+/* Ensure inline placement between footer texts looks natural */
+.footer-youtube-link { display: inline-flex; vertical-align: middle; margin: 0 0.45rem; }
+
+/* Center container for footer controls */
+.footer-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* Make sure footer is a positioning context */
+footer, .site-footer, .footer, [role="contentinfo"] { position: relative; }
+
+@media (max-width: 640px) {
+  .footer-youtube-link { padding: 0.35rem 0.5rem; font-size: 0.95rem; }
+}

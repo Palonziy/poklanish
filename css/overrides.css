@@ -1,39 +1,29 @@
+/* ========================================
+   GENERAL OVERRIDES
+   ======================================== */
 
-#root > section:nth-of-type(2) {
-  background: hsl(40 30% 94%) !important;
-}
-
+#root > section:nth-of-type(2),
 #root > section:nth-of-type(8) {
   background: hsl(40 30% 94%) !important;
 }
 
-/* Dark-mode adjustments */
 .dark #root > section:nth-of-type(2),
 .dark #root > section:nth-of-type(8) {
   background: hsl(30 15% 8%) !important;
 }
 
-/* Scroll reveal: fade + slide up when sections enter viewport */
-/* Reveal items (transform-only, no opacity/blur) */
-.reveal-item{
+/* Scroll reveal effects */
+.reveal-item {
   transform: translateY(20px) scale(.98);
-  transition: transform .6s cubic-bezier(.2,.9,.2,1);
+  transition: transform .6s cubic-bezier(.2, .9, .2, 1);
   will-change: transform;
 }
-.reveal-item.is-visible{
+
+.reveal-item.is-visible {
   transform: none;
 }
 
-/* Stagger helper for small child elements inside a component */
-.reveal-item[data-stagger-index] {
-  /* placeholder: JS sets `transition-delay` inline per item to create stagger */
-  transition-delay: 0s;
-}
-
-/* Backwards-compatible: if sections had reveal-on-scroll, keep harmless defaults */
-.reveal-on-scroll{transform: none}
-
-/* Accessibility: respect user's reduced motion preference by disabling AOS transitions */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   [data-aos], [data-aos] * {
     transition: none !important;
@@ -42,104 +32,147 @@
   }
 }
 
-/* Mentoring iframe: ensure it fills the card and keeps rounded corners */
+/* ========================================
+   MENTORING SECTION - VERTICAL VIDEO FIX
+   ======================================== */
+
+/* Asosiy card konteyneri */
+[class*="rounded-3xl"].mentoring-processed {
+  padding: 0 !important;
+  overflow: hidden;
+  background: #fdf8f3 !important;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.mentoring-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 500px;
+}
+
+.mentoring-left {
+  flex: 0.8; /* Desktopda vertikal video uchun biroz torroq */
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+.mentoring-right {
+  flex: 1.2;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mentoring-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .mentoring-iframe {
   width: 100%;
   height: 100%;
-  display: block;
   border: 0;
-  border-radius: 1rem;
-}
-
-/* Two-column layout for mentoring card: video left, content right */
-.mentoring-row {
-  display: flex;
-  gap: 1rem;
-  align-items: stretch;
-  width: 100%;
-  /* allow the row to grow to the card's content height so left side matches right */
-  align-items: stretch;
-}
-.mentoring-left {
-  /* Make the left side occupy half the card on larger screens */
-  flex: 0 0 50%;
-  max-width: 50%;
-  min-width: 220px;
-  overflow: hidden;
-  border-radius: 1rem;
   display: block;
-}
-.mentoring-left { position: relative; }
-.mentoring-right {
-  flex: 1 1 50%;
+  object-fit: cover; /* Videoni konteynerga moslash */
 }
 
-@media (max-width: 768px) {
+/* Matn qismini chiroyli qilish */
+.mentoring-content-inner h2, 
+.mentoring-content-inner h3 {
+  margin-top: 0 !important;
+  font-size: 2.5rem !important;
+  color: #4a3728 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Mobile Responsiveness (< 992px) */
+@media (max-width: 992px) {
   .mentoring-row {
     flex-direction: column;
+    min-height: auto;
   }
+  
   .mentoring-left {
-    max-width: 100%;
-    flex-basis: auto;
-    height: 280px;
+    width: 100%;
+    /* Mobil uchun vertikal video nisbati (9:16) */
+    aspect-ratio: 9 / 16; 
+    max-height: 70vh; /* Juda uzun bo'lib ketmasligi uchun */
+    margin: 0 auto;
+    order: 1;
   }
-  .mentoring-iframe { height: 100%; }
+  
+  .mentoring-right {
+    width: 100%;
+    padding: 2rem 1.5rem;
+    order: 2;
+    background: #fdf8f3;
+  }
+  
+  .mentoring-video-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .mentoring-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .mentoring-content-inner h2, 
+  .mentoring-content-inner h3 {
+    font-size: 1.8rem !important;
+    text-align: center;
+  }
 }
 
-/* Ensure iframe fills its wrapper and respects the container height (matches right content height) */
-.mentoring-left .mentoring-iframe {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+/* Kichik mobil ekranlar uchun qo'shimcha moslashuv */
+@media (max-width: 480px) {
+  .mentoring-left {
+    max-height: 60vh;
+  }
+  
+  .mentoring-right {
+    padding: 1.5rem 1rem;
+  }
 }
 
-/* If card contains the absolute inset container, make iframe fill it */
-.mentoring-left .absolute.inset-0.flex.items-center.justify-center > iframe {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  object-fit: cover !important;
-  border-radius: inherit !important;
+/* ========================================
+   FOOTER YOUTUBE LINK
+   ======================================== */
+
+.footer-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
 }
 
-/* Footer YouTube link styles */
 .footer-youtube-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem 1rem;
   background: #ff0000;
-  color: #fff;
+  color: #fff !important;
   text-decoration: none;
   border-radius: 0.5rem;
   font-weight: 600;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-}
-.footer-youtube-link .fy-icon svg { display: block; }
-.footer-youtube-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,0.14); }
-
-/* Ensure footer layout doesn't break when adding the link */
-footer .footer-youtube-link, .site-footer .footer-youtube-link, .footer .footer-youtube-link { margin-left: 0.5rem; }
-
-/* Ensure inline placement between footer texts looks natural */
-.footer-youtube-link { display: inline-flex; vertical-align: middle; margin: 0 0.45rem; }
-
-/* Center container for footer controls */
-.footer-center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Make sure footer is a positioning context */
-footer, .site-footer, .footer, [role="contentinfo"] { position: relative; }
+.footer-youtube-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+}
 
-@media (max-width: 640px) {
-  .footer-youtube-link { padding: 0.35rem 0.5rem; font-size: 0.95rem; }
+.footer-youtube-link svg {
+  display: block;
 }
